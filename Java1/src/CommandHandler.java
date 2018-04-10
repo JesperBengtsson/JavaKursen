@@ -1,5 +1,5 @@
 public class CommandHandler {
-	
+
     public void countWords (String sentence) {
         int words = 0;
         for(int i = 0; i < sentence.length(); i++) {
@@ -15,7 +15,14 @@ public class CommandHandler {
         System.out.println("words: " + words);
     }
     public void countCharacters (String sentence) {
-        System.out.println("Characters: " + sentence.replaceAll(" ", "").length());
+    	int counter = 0;
+    	for (int i = 0; i< sentence.length(); i++) {
+            char c = sentence.charAt(i);
+            	if (Character.isLetter(c)) {
+            	counter++;
+            	}
+    	}
+        System.out.println("Characters: " + counter);
 
     }
 
