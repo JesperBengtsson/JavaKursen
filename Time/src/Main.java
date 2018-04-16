@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.io.InputStreamReader;
 
 public class Main {
@@ -34,14 +35,20 @@ public class Main {
                     System.out.println("Example: 2018-04-12 09:23\nEnter a end date: ");
                     String end = reader.readLine();
                     //try catch på formateringen så att man inte kan skriva in invalid input
-                    //printar Not valid om det inte stämmer med formateringen
+                    //printar invalid input om det inte stämmer med formateringen
                     try {
                         newBooking.setStart(LocalDateTime.parse(start, formatter));
                         newBooking.setEnd(LocalDateTime.parse(end, formatter));
                     }
-                    catch(Exception E) {
-                        System.out.println("Not valid");
-                        continue;
+                    catch(DateTimeParseException E) {
+                        System.out.println("Invalid input!\n[Y] Try again\n[N] Back to menu");
+                        command = reader.readLine();
+                        if(command.equals("N")) {
+                        	break;
+                        }
+                        else if(command.equals("Y")) {
+                        	continue;                    
+                        }                        
                     }
                     //callar funktion från bookinghandler som kollar om datetimes redan finns i listan
                     //finns det inte läggs den in i listan och breakar while loopen och går tillbaka till menyn

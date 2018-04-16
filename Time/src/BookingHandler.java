@@ -23,6 +23,9 @@ public class BookingHandler {
     //kollar om någon datetime som förs in är emellan bookingen som också skickats in
     public boolean isBetween(LocalDateTime datetime, Booking booking){
         return !datetime.isBefore(booking.getStart()) && !datetime.isAfter(booking.getEnd());
+    } 
+    public boolean ifOverlapping(Booking booking, Booking newBooking){
+        return newBooking.getStart().isBefore(booking.getStart()) && newBooking.getEnd().isAfter(booking.getEnd());
     }
     //kollar ifall bookingen som skickas in överlappar nån av dom befintliga bookningar
     public boolean checkIfDatetimeOverlaps(Booking newBooking) {
@@ -33,7 +36,5 @@ public class BookingHandler {
             }
         } return false;
     }
-    public boolean ifOverlapping(Booking booking, Booking newBooking){
-        return newBooking.getStart().isBefore(booking.getStart()) && newBooking.getEnd().isAfter(booking.getEnd());
-    }
+    
 }
