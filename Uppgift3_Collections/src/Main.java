@@ -19,15 +19,19 @@ public class Main {
 //som sedan printar ut den nya arrayen utan dubbletter
                 System.out.println("Input: " + Arrays.toString(arr));
                 Arrays.sort(arr);
-                int newArr = arr[0];
-                System.out.print("Output:");
-                for (int i = 0; i < arr.length; i++) {
-                    if (newArr != arr[i]) {
-                    	System.out.print(" " + newArr);
-                        newArr = arr[i];
-                    }
-                }
-                System.out.print(" " + newArr + "\n");   
+                int[] newArr = new int[arr.length];
+                int prev = arr[0];
+                newArr[0] = prev;
+                int count = 1;
+                	for (int i = 0; i < arr.length; ++i) {
+                		if (arr[i] != prev) {
+                        newArr[count++] = arr[i];
+                		}
+                		prev = arr[i];
+                	}
+                		int[] comp = new int[count];
+                		System.arraycopy(newArr, 0, comp, 0, count);
+                		System.out.println("Output: " + Arrays.toString(comp));
             }
             if(command.equals("2")) {
 //printar input from arrayen, och skapar en hashset och addar arr in i hashsetten och sedan printar ut            	
