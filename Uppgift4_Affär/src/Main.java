@@ -13,29 +13,17 @@ public class Main {
 
         while (!command.equals("EXIT")) {
             System.out.println("-------MENU-------\n[1] Show storage\n[2] Go to cart\n" +
-                    "[EXIT] to exit\n------------------");
+                    "[3] Search for item\n[EXIT] to exit\n------------------");
             command = reader.readLine();
 //printar ut myStorage listan                
              if(command.equals("1")){
             	try {        		
             		myStorage.itemList();
-            		System.out.println("[1] To search\n[2] Add items to cart\n[MENU] Back to menu");
-            		command = reader.readLine();
-//stämmer userinput så söker programmet igenom listan efter artNumber
-//genom att calla funktion i ItemStorage klassen       		
-            			if(command.equals("1")) {
-            				System.out.println("Search by Art.number\n[MENU] Back to menu");
-            				command = reader.readLine();
-            					if(command.equals("MENU")) {
-            						continue;
-            					}
-            				int index = Integer.parseInt(command);
-            				myStorage.findItemByArtNumber(index);
-            				continue;
-            			}
+            		System.out.println("[1] Add items to cart\n[MENU] Back to menu");
+            		command = reader.readLine();     		
 //stämmer userinput visas index som hör till vilket item
-//lägger sedan in item från myStorage till myCart och input stämmer            			
-            			if(command.equals("2")) {               				
+//lägger sedan in item från myStorage till myCart om input stämmer            			
+            			if(command.equals("1")) {               				
             				myStorage.showWhatToAdd();
             				System.out.println("[MENU] Back to menu");
             				command = reader.readLine();
@@ -85,7 +73,21 @@ public class Main {
                 else
                     System.out.println("Cart is empty");
                     continue;
-            }             
+            }
+//stämmer userinput så söker programmet igenom listan efter artNumber
+//genom att calla funktion i ItemStorage klassen              
+            if(command.equals("3")) {
+            	try {	
+            		System.out.println("Search by Art.number or description name");           	
+            		command = reader.readLine();
+            		myStorage.findItemByArtNumber(command, command);
+            		continue;        		
+            	}
+            	catch (IndexOutOfBoundsException | NumberFormatException e) {
+            		System.out.println("Item does not exist");
+            		continue;
+            	}
+            }
         }
     }
 }

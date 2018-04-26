@@ -6,9 +6,9 @@ public abstract class Storage<T> {
 
 //lägger in samtliga items i lista
     public void initializeItems() {
-        Item item1 = new Item(1001, 11, "item1");
-        Item item2 = new Item(1002, 22, "item2");
-        Item item3 = new Item(1003, 33, "item3");       
+        Item item1 = new Item("1001", 11, "item1");
+        Item item2 = new Item("1002", 22, "item2");
+        Item item3 = new Item("1003", 33, "item3");       
 
         storageList.add(item1);
         storageList.add(item2);

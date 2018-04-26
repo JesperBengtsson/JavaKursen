@@ -7,14 +7,12 @@ public class ItemStorage extends Storage<Item> {
             		+ item.getArtNumber() + " in your cart.\n");
         }
     }
-//sökmotor, loopar igenom listan, stämmer userinput med artNumber så printas det elementet ut
-	public void findItemByArtNumber(int artNumber){		
+//sökmotor, loopar igenom listan, stämmer userinput med artNumber eller description så printas det elementet ut
+	public void findItemByArtNumber(String artNumber, String description){		
 	    for (Item item : storageList) {
-	        if (item.getArtNumber() == artNumber) {
+	        if (item.getArtNumber().contains(artNumber) || item.getDescription().contains(description)) {
 	            System.out.println(item);
-	            return;
 	        }	        
-	    }
-        System.out.println("Invalid input");
+	    }     
     }
 }
