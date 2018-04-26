@@ -80,7 +80,7 @@ public class Main {
             	try {	
             		System.out.println("Search by Art.number or description name");           	
             		command = reader.readLine();
-            		myStorage.findItemByArtNumber(command, command);
+            		myStorage.searchForItem(command);
             		continue;        		
             	}
             	catch (IndexOutOfBoundsException | NumberFormatException e) {
