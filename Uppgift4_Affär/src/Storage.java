@@ -30,5 +30,4 @@ public abstract class Storage<T> {
         storageList.remove(index);
         return item;
     }
-
 }

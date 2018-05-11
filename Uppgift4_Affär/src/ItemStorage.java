@@ -10,7 +10,7 @@ public class ItemStorage extends Storage<Item> {
 //sökmotor, loopar igenom listan, stämmer userinput med artNumber eller description så printas det elementet ut
 	public void searchForItem(String inData){		
 	    for (Item item : storageList) {
-	        if (item.getArtNumber().contains(inData) || item.getDescription().contains(inData)) {
+	        if (item.getArtNumber().equals(inData) || item.getDescription().contains(inData)) {
 	            System.out.println(item);
 	        }	        
 	    }     
