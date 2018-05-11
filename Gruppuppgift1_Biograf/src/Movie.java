@@ -19,15 +19,16 @@ public class Movie {
             System.out.println("Platsen finns inte");
             return;
         }
-        for(int i = startSeat; i < startSeat + numOfSeats; i++) {
+        for(int i = startSeat; i < (startSeat) + numOfSeats; i++) {
             if(SeatMap.get(i).equals("U")) {
                 System.out.println("En av platserna är upptagen");
                 return;
             }
         }
-        for(int i = startSeat; i < startSeat + numOfSeats; i++) {
-            SeatMap.put(i, "U");
+        for(int i = startSeat; i < (startSeat) + numOfSeats; i++) {
+            SeatMap.put((i - 1), "U");
         }
+        System.out.println(SeatMap.values());
     }
 
     public void bookSeatsFree(int numOfSeats) {

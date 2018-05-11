@@ -13,23 +13,35 @@ public class Salon {
     public Salon(){
         Movies = new ArrayList<>();
     }
+    public boolean checkIfTimeExists(String time) {
+        for (Movie movie : Movies) {
+            if(time.equals(movie.getTime())) {
+                return true;
+            }
+        } return false;
+    }
+
 
     public void addMovie(String movieName, String time) {
-        Movies.add(new Movie(movieName, time));
+
+                Movies.add(new Movie(movieName, time));
+
     }
 
     public Movie getMovie(int index) {
+        if(index < 0 || index >= Movies.size()){
+            return null;
+        }
         return Movies.get(index);
     }
 
-    public void printMovies(boolean showIdex){
-
+    public void printMovies(boolean showIndex){
         for(Movie movie : Movies) {
-            if(showIdex) {
-                System.out.println("[" + Movies.indexOf(movie) + "] Name: " + movie.getName() + "Time: " + movie.getTime());
+            if(showIndex) {
+                System.out.println("[" + Movies.indexOf(movie) + "] Name: " + movie.getName() + " Time: " + movie.getTime());
             }
             else {
-                System.out.println("Name: " + movie.getName() + "Time: " + movie.getTime());
+                System.out.println("Name: " + movie.getName() + " Time: " + movie.getTime());
             }
         }
         if(Movies.size() == 0) {

@@ -23,9 +23,9 @@ public class TheaterHandler {
     public void printSalons(boolean showIndex){
         for (Salon salon : Salons) {
             if(showIndex)
-                System.out.println("[" + Salons.indexOf(salon) + "] " + salon.getSalonName());
+                System.out.println("[" + Salons.indexOf(salon) + "] Salong: " + salon.getSalonName());
             else
-                System.out.println(salon.getSalonName());
+                System.out.println("Salong: " + salon.getSalonName());
         }
     }
 
