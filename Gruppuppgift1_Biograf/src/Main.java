@@ -72,16 +72,16 @@ public class Main {
                         } else if (movie != null) {
                             System.out.println("Lediga platser för filmen\n");
                             movie.printSeats();
-                            System.out.println("\n[0] För länkande platser\n[1] För fria platser");
+                            System.out.println("A = Ledig plats\nU = Upptagen plats\n[0] För länkande platser\n[1] För fria platser");
                             command = readLine();
                             if (command.equals("0")) {
-                                System.out.println("Ange startplats");
-                                int startSeat = readAndParse();
-                                System.out.println("Ange antal platser");
+                                System.out.println("Ange antal platser du vill boka");
                                 int numSeats = readAndParse();
+                                System.out.println("Ange startplats för bokning");
+                                int startSeat = readAndParse();
                                 movie.bookSeats(startSeat, numSeats);
                             } else if (command.equals("1")) {
-                                System.out.println("Ange antal platser");
+                                System.out.println("Ange antal platser du vill boka");
                                 int numSeats = readAndParse();
                                 movie.bookSeatsFree(numSeats);
                             }

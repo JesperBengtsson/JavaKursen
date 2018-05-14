@@ -15,11 +15,11 @@ public class Movie {
     }
 
     public void bookSeats(int startSeat, int numOfSeats) {
-        if(startSeat + numOfSeats > SeatMap.size()) {
+        if(startSeat + numOfSeats > (SeatMap.size() + 1) || numOfSeats < 0 || numOfSeats > 10) {
             System.out.println("Platsen finns inte");
             return;
         }
-        for(int i = startSeat; i < (startSeat) + numOfSeats; i++) {
+        for(int i = startSeat; i < startSeat + (numOfSeats -1); i++) {
             if(SeatMap.get(i).equals("U")) {
                 System.out.println("En av platserna är upptagen");
                 return;
@@ -35,7 +35,9 @@ public class Movie {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int input = 0;
         int count = 0;
-        while(count < numOfSeats) {
+
+        while(count < numOfSeats && numOfSeats < 10) {
+
             System.out.println("Välj plats " + (count + 1) + " av " + numOfSeats);
             try {
                 input = Integer.parseInt(br.readLine());
@@ -43,10 +45,10 @@ public class Movie {
                     System.out.println("Den plats du angivit finns inte.");
                     continue;
                 }
-            } catch (IOException e) {
+            } catch (IOException | NumberFormatException e) {
                 System.out.println("invalid input");
             }
-
+            try{
             if(SeatMap.get(input - 1).equals("U")) {
                 System.out.println("Plats " + input + " är upptagen. välj en ny");
                 continue;
@@ -54,6 +56,9 @@ public class Movie {
             SeatMap.replace(input - 1, "U");
 
             count++;
+        }catch (NullPointerException e) {
+                System.out.println("Invalid input");
+            }
         }
 
         System.out.println(SeatMap.values());
