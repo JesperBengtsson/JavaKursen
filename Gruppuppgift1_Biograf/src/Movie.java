@@ -15,7 +15,8 @@ public class Movie {
     }
 
     public void bookSeats(int startSeat, int numOfSeats) {
-        if(startSeat + numOfSeats > (SeatMap.size() + 1) || numOfSeats < 0 || numOfSeats > 10) {
+        if(startSeat + numOfSeats > (SeatMap.size() + 1) || numOfSeats < 0 || numOfSeats > 10
+                || startSeat < 0 || startSeat > 10) {
             System.out.println("Platsen finns inte");
             return;
         }
