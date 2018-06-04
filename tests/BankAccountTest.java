@@ -40,4 +40,16 @@ public class BankAccountTest {
         assertEquals("Incorrect balance, successful withdrawal", 200.0, account.getBalance(), 0.0);
         assertNotEquals("Balance can't be below zero", 0.0,account.withdrawMoney(-500.0));
     }
+
+    @Test
+    public void listTransactions() {
+        bank.addAccount(user, "777");
+        BankAccount newAccount = bank.getAccountByAccountNumber("777");
+        account.setBalance(2000);
+        account.setBalance(2000);
+        bank.newTransaction(account, "777", 1000);
+        bank.newTransaction(newAccount, "123", 1000);
+        assertEquals("Transaction was not added correctly", 1, account.getTransactions().size());
+        assertNotEquals("Transaction was not added correctly", 2, newAccount.getTransactions().size());
+    }
 }

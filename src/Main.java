@@ -56,26 +56,20 @@ public class Main {
                         }
                         else
                             System.out.println("Enter amount");
-                            command = br.readLine();
-                            double index = Double.parseDouble(command);
-                        if(bankAccount.withdrawMoney(index)) {
-                            System.out.println("You withdrew " + index + "kr from account: " + bankAccount.getAccountNumber());
-                            System.out.println("New balance " + bankAccount.getBalance() + "kr\n");
-                            continue;
-                        }
-                        else System.out.println("You were denied this withdrawal of " + index + "kr, check your balance and try again.\n");
-                            continue;
+                            double amount = readAndParse();
+                            if(bankAccount.withdrawMoney(amount)) {
+                                System.out.println("You withdrew " + amount + "kr from account: " + bankAccount.getAccountNumber());
+                                System.out.println("New balance " + bankAccount.getBalance() + "kr\n");
+                            } else
+                                System.out.println("You were denied your withdrawal, check your balance and try again.\n");
                     }
                     else if(command.equals("1")) {
                         System.out.println("Enter amount");
-                        command = br.readLine();
-                        double index = Double.parseDouble(command);
-                        if(bankAccount.addMoney(index)) {
-                            System.out.println("You deposited " + index + "kr to account: " + bankAccount.getAccountNumber());
-                            System.out.println("New balance " + bankAccount.getBalance() + "kr\n");
-                            continue;
-                        }
-                        else System.out.println("You can't deposite 0 or below");
+                        double amount = readAndParse();
+                            if (bankAccount.addMoney(amount)) {
+                                System.out.println("You deposited " + amount + "kr to account: " + bankAccount.getAccountNumber());
+                                System.out.println("New balance " + bankAccount.getBalance() + "kr\n");
+                            } else System.out.println("Deposite did not go through\n");
                     }
                     else if(command.equals("2")) {
                         while (!command.equals("BACK")) {
@@ -89,16 +83,15 @@ public class Main {
                                     continue;
                                 }
                                 System.out.println("Enter amount.");
-                                String amount = br.readLine();
-                                double index = Double.parseDouble(amount);
-                                if (bankAccount.withdrawMoney(index)) {
+                                double amount = readAndParse();
+                                if (bankAccount.withdrawMoney(amount)) {
                                     try {
-                                        bank.newTransaction(bankAccount, toAccountNr, index);
+                                        bank.newTransaction(bankAccount, toAccountNr, amount);
                                     } catch (NullPointerException e) {
                                         System.out.println("Invalid account");
                                     }
                                 } else
-                                    System.out.println("You were denied this transaction of " + index + "kr, check your balance and try again.\n");
+                                    System.out.println("Transaction did not go through, check your balance and try again.\n");
                             }
                             else if (command.equals("1")) {
                                 bankAccount.listTransactions();
@@ -109,11 +102,20 @@ public class Main {
                         }
                     }
                     else if(command.equals("3")) {
-                        bankAccount.accountAccess(bankAccount);
+                        bank.accountAccess(bankAccount);
                     }
                 }
             }
         }
+    }
 
+    private static double readAndParse(){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            double tmpDb = Double.parseDouble(br.readLine());
+            return tmpDb;
+        } catch (IOException | NumberFormatException e) {
+            return -1;
+        }
     }
 }

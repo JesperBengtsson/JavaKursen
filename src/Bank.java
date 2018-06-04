@@ -5,6 +5,11 @@ public class Bank {
     private ArrayList<BankAccount> bankAccounts = new ArrayList<>();
 
     public void addAccount(User user, String accountNumber) {
+        for(BankAccount bankAccount : bankAccounts) {
+            if(bankAccount.getAccountNumber().equals(accountNumber)) {
+                return;
+            }
+        }
          BankAccount newAccount = new BankAccount(user, accountNumber);
          bankAccounts.add(newAccount);
          user.addAccountId(newAccount);
@@ -33,12 +38,27 @@ public class Bank {
 
     }
 
+    public void accountAccess(BankAccount account) {
+        if(!account.isLocked()) {
+            System.out.println("Account is now locked for withdrawal.");
+            account.setLocked(true);
+        }
+        else if(account.isLocked()) {
+            System.out.println("Account has now access to withdrawal.");
+            account.setLocked(false);
+        }
+    }
+
     public void newTransaction(BankAccount fromAccount, String toAccountNr, double amount) {
-        BankAccount toAccount;
-        toAccount = getAccountByAccountNumber(toAccountNr);
-        Transaction transaction = new Transaction(fromAccount.getAccountNumber(), toAccount.getAccountNumber(), amount);
-        fromAccount.addToTransactionHistory(transaction);
-        toAccount.addMoney(amount);
+        if(!fromAccount.isLocked()) {
+            BankAccount toAccount;
+            toAccount = getAccountByAccountNumber(toAccountNr);
+            Transaction transaction = new Transaction(fromAccount.getAccountNumber(), toAccount.getAccountNumber(), amount);
+            fromAccount.addToTransactionHistory(transaction);
+            toAccount.addMoney(amount);
+            fromAccount.withdrawMoney(amount);
+        }
+        else return;
     }
 
     public ArrayList<BankAccount> getBankAccounts() {

@@ -1,7 +1,3 @@
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,18 +40,6 @@ public class BankAccount {
     public void addToTransactionHistory(Transaction transaction) {
         transactionList.add(transaction);
     }
-
-    public void accountAccess(BankAccount account) {
-        if(!account.isLocked()) {
-            System.out.println("Account is now locked for withdrawal.");
-            account.setLocked(true);
-        }
-        else if(account.isLocked()) {
-            System.out.println("Account has now access to withdrawal.");
-            account.setLocked(false);
-        }
-    }
-
 
 
     // Getters and setters
