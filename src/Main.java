@@ -58,6 +58,7 @@ public class Main {
                             System.out.println("Enter amount");
                             double amount = readAndParse();
                             if(bankAccount.withdrawMoney(amount)) {
+                                bank.newTransaction(bankAccount, bankAccount.getAccountNumber(), amount);
                                 System.out.println("You withdrew " + amount + "kr from account: " + bankAccount.getAccountNumber());
                                 System.out.println("New balance " + bankAccount.getBalance() + "kr\n");
                             } else
@@ -67,6 +68,7 @@ public class Main {
                         System.out.println("Enter amount");
                         double amount = readAndParse();
                             if (bankAccount.addMoney(amount)) {
+                                bank.newTransaction(bankAccount, bankAccount.getAccountNumber(), amount);
                                 System.out.println("You deposited " + amount + "kr to account: " + bankAccount.getAccountNumber());
                                 System.out.println("New balance " + bankAccount.getBalance() + "kr\n");
                             } else System.out.println("Deposite did not go through\n");

@@ -58,7 +58,10 @@ public class Bank {
         fromAccount.withdrawMoney(amount);
         Transaction transaction = new Transaction(fromAccount.getAccountNumber(), toAccount.getAccountNumber(), amount);
         fromAccount.addToTransactionHistory(transaction);
-    }
+            if(fromAccount != toAccount) {
+            toAccount.addToTransactionHistory(transaction);
+            }
+        }
 
     public ArrayList<BankAccount> getBankAccounts() {
         return bankAccounts;

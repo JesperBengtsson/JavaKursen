@@ -49,7 +49,7 @@ public class BankAccountTest {
         account.setBalance(2000);
         bank.newTransaction(account, "777", 1000);
         bank.newTransaction(newAccount, "123", 1000);
-        assertEquals("Transaction was not added correctly", 1, account.getTransactions().size());
-        assertNotEquals("Transaction was not added correctly", 2, newAccount.getTransactions().size());
+        assertEquals("Transaction was not added correctly", 2, account.getTransactions().size());
+        assertNotEquals("Transaction was not added correctly", 1, newAccount.getTransactions().size());
     }
 }
