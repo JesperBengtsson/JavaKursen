@@ -15,7 +15,7 @@ public class BankAccount {
         this.user = user;
     }
 
-    public boolean addMoney(double amount){
+    public synchronized boolean addMoney(double amount){
         if(amount <= 0) {
             return false;
         }
@@ -23,7 +23,7 @@ public class BankAccount {
         return true;
     }
 
-    public boolean withdrawMoney(double amount) {
+    public synchronized boolean withdrawMoney(double amount) {
         if(this.balance - amount < 0 || amount <= 0) {
             return false;
         }

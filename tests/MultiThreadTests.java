@@ -76,4 +76,32 @@ public class MultiThreadTests {
 
         }
     }
+
+    @Test
+    public void TestTransactionThread() {
+
+        account1.setBalance(10000);
+        account2.setBalance(10000);
+
+        for(int i = 0; i < THREADS; i++) {
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    for(int i = 0; i < 100; i++) {
+                        bank.newTransaction(account1, "666", 10);
+                    }
+                    latch.countDown();
+                }
+            });
+        }
+        executorService.shutdown();
+
+        try {
+            latch.await();
+            assertEquals(5000, account1.getBalance(), 0.0);
+            assertEquals(15000, account2.getBalance(), 0.0);
+        } catch(InterruptedException e) {
+
+        }
+    }
 }

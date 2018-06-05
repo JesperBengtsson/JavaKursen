@@ -49,16 +49,15 @@ public class Bank {
         }
     }
 
-    public void newTransaction(BankAccount fromAccount, String toAccountNr, double amount) {
-        if(!fromAccount.isLocked()) {
-            BankAccount toAccount;
-            toAccount = getAccountByAccountNumber(toAccountNr);
-            Transaction transaction = new Transaction(fromAccount.getAccountNumber(), toAccount.getAccountNumber(), amount);
-            fromAccount.addToTransactionHistory(transaction);
-            toAccount.addMoney(amount);
-            fromAccount.withdrawMoney(amount);
+    public synchronized void newTransaction(BankAccount fromAccount, String toAccountNr, double amount) {
+        if(fromAccount.isLocked()) {
+            return;
         }
-        else return;
+        BankAccount toAccount = getAccountByAccountNumber(toAccountNr);
+        toAccount.addMoney(amount);
+        fromAccount.withdrawMoney(amount);
+        Transaction transaction = new Transaction(fromAccount.getAccountNumber(), toAccount.getAccountNumber(), amount);
+        fromAccount.addToTransactionHistory(transaction);
     }
 
     public ArrayList<BankAccount> getBankAccounts() {
