@@ -37,29 +37,28 @@ public class BankTest {
     @Test
     public void getAccountByAccountNumber() {
         ArrayList<BankAccount> bankAccounts = bank.getBankAccounts();
-        for(int i = 0; i < 1000; i++) {
-            assertNotNull("Accounts wasn't added to list correctly", bankAccounts);
-            assertEquals("Size is incorrect", 2, bankAccounts.size());
-        }
+
+        assertNotNull("Accounts wasn't added to list correctly", bankAccounts);
+        assertEquals("Size is incorrect", 2, bankAccounts.size());
+
         bank.addAccount(user, "777");
-        for(int i = 0; i < 1000; i++) {
-            BankAccount newAccount = bank.getAccountByAccountNumber("777");
-            assertTrue("Account wasn't added correctly", bankAccounts.contains(newAccount));
-        }
+
+        BankAccount newAccount = bank.getAccountByAccountNumber("777");
+        assertTrue("Account wasn't added correctly", bankAccounts.contains(newAccount));
     }
 
     @Test
     public void getAccountByAccountNumberAndUser() {
         ArrayList<BankAccount> bankAccounts = bank.getBankAccounts();
-        for(int i = 0; i < 1000; i++) {
-            assertNotNull("Accounts wasn't added to list correctly", bankAccounts);
-            assertEquals("Size is incorrect", 2, bankAccounts.size());
-        }
+
+        assertNotNull("Accounts wasn't added to list correctly", bankAccounts);
+        assertEquals("Size is incorrect", 2, bankAccounts.size());
+
         bank.addAccount(user, "777");
-        for(int i = 0; i < 1000; i++) {
-            BankAccount newAccount = bank.getAccountByAccountNumberAndUser("777", "Batman");
-            assertTrue("Account wasn't added correctly", bankAccounts.contains(newAccount));
-        }
+
+        BankAccount newAccount = bank.getAccountByAccountNumberAndUser("777", "Batman");
+        assertTrue("Account wasn't added correctly", bankAccounts.contains(newAccount));
+
     }
 
     @Test
@@ -74,35 +73,28 @@ public class BankTest {
 
     @Test
     public void TestTransaction() {
-        for(int i = 0; i < 1000; i++) {
-            bank.newTransaction(account1, "666", 4000);
-            assertEquals("Transaction failed", 1000, account1.getBalance(), 0.0);
-        }
+        bank.newTransaction(account1, "666", 4000);
+        assertEquals("Transaction failed", 1000, account1.getBalance(), 0.0);
     }
 
     @Test
     public void TestTransactionBalanceCantBeBelowZero() {
-        for(int i = 0; i < 1000; i++) {
-            bank.newTransaction(account1, "666", 5001);
-            assertEquals("Can't have negative balance", 5000, account1.getBalance(), 0.0);
-        }
+        bank.newTransaction(account1, "666", 5001);
+        assertEquals("Can't have negative balance", 5000, account1.getBalance(), 0.0);
     }
 
     @Test
     public void TestTransactionWithLockedAccount() {
         bank.accountAccess(account1);
-        for(int i = 0; i < 1000; i++) {
-            bank.newTransaction(account1, "666", 1000);
-            assertEquals("Account not locked correctly", 5000, account1.getBalance(), 0.0);
-        }
+        bank.newTransaction(account1, "666", 1000);
+        assertEquals("Account not locked correctly", 5000, account1.getBalance(), 0.0);
+
     }
 
     @Test
     public void TestTransactionToOwnAccount() {
-        for(int i = 0; i < 1000; i++) {
-            bank.newTransaction(account1, "555", 1000);
-            assertEquals("Can't transfer to own account", 5000, account1.getBalance(), 0.0);
-        }
+        bank.newTransaction(account1, "555", 1000);
+        assertEquals("Can't transfer to own account", 5000, account1.getBalance(), 0.0);
     }
 
 
