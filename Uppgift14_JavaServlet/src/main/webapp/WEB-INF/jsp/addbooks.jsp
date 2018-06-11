@@ -20,7 +20,7 @@
 
 <div class="container">
   <h2>Add book</h2>
-  <form action="/savebook">
+  <form action="/addbooks" method="post">
     <div class="form-group">
       <label for="title">Title:</label>
       <input type="text" class="form-control" id="title" name="title">

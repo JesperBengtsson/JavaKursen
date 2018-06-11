@@ -19,11 +19,11 @@
 <body>
 	<div class="container">
   <h2>Button Tags</h2>
-  <a href="books" class="btn btn-info" role="button">Show books in db</a>
-  <a href="addbooks" class="btn btn-info" role="button">Add books to db</a>
-  <a href="editbook" class="btn btn-info" role="button">edit book in db</a>
-  <a href="searchbook" class="btn btn-info" role="button">Search book in db</a>
-  <a href="deletebook" class="btn btn-info" role="button">Delete book from db</a>
+  <a href="books" class="btn btn-primary" role="button">Show books in db</a>
+  <a href="addbooks" class="btn btn-primary" role="button">Add books to db</a>
+  <a href="editbook" class="btn btn-primary" role="button">edit book in db</a>
+  <a href="searchbook" class="btn btn-primary" role="button">Search book in db</a>
+  <a href="deletebook" class="btn btn-primary" role="button">Delete book from db</a>
 </div>
 	
 </body>  

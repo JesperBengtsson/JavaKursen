@@ -30,9 +30,9 @@ public class MainController {
     @GetMapping("/books")
     public String books(Map<String, Object> model, String query1) {
 
-        List<Book> theBooks = dataDao.fetchBooks();
+        List<Book> bookList = dataDao.fetchBooks();
 
-        model.put("books", theBooks);
+        model.put("books", bookList);
 
         return "books";
     }
@@ -42,7 +42,7 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/addbooks")
+    @RequestMapping("/addbooks")
     public String addbooks(Map<String, Object> model, String query1) {
         return "addbooks";
     }
