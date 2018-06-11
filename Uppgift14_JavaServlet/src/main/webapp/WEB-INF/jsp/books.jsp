@@ -24,7 +24,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Movie id</th>
+        <th>Book id</th>
         <th>Title</th>
         <th>Description</th>
       </tr>
