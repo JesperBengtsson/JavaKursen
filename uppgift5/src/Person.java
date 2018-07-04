@@ -2,23 +2,24 @@ import java.util.Random;
 
 public class Person implements Runnable {
 
-    private int startFloorNumber = 0;
-    private int endFloorNumber = 0;
+    private int startingFloor;
+    private int desiredFloor;
     private boolean insideElevator = false;
     private boolean selectedStart = false;
     private boolean selectedEnd = false;
     private String name;
     public Elevator elevator;
 
-    public Person(String name, Elevator elev ) {
+    public Person(String name, Elevator elev) {
         super();
         this.name = name;
         this.elevator = elev;
+        this.startingFloor = getRandomNumber(elevator.getBottomFloor(), elevator.getTopFloor());
     }
 
-    public  int getRandomNumber(int min, int max) {
+    public int getRandomNumber(int min, int max) {
 
-        if (min >= max) {
+        if (min > max) {
             throw new IllegalArgumentException("max must be greater than min");
         }
         Random r = new Random();
@@ -27,52 +28,54 @@ public class Person implements Runnable {
 
     @Override
     public void run() {
+
         while (true) {
             try {
-                Thread.sleep(200);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
 
                 e.printStackTrace();
             }
             if (!selectedStart) {
                 if (!isInsideElevator()  && !elevator.getDoorOpen()) {
-                    System.out.println(name + " waiting outside");
-                    setRandomNumberStartfloor();
-                    elevator.addToPbList(this.startFloorNumber);
-                    selectedStart=true;
+                    //System.out.println(name + " waiting outside");
 
+                    elevator.addToPbList(startingFloor);
+                    selectedStart = true;
                 }
             }
-            if (!isInsideElevator()  && !elevator.getDoorOpen()) {
-                System.out.println(name + " waiting outside");
-            }
 
-            if (this.getStartFloorNumber() == elevator.getCurrentFloor() && elevator.getDoorOpen()) {
+            if (startingFloor == elevator.getCurrentFloor() && elevator.getDoorOpen()) {
                 if (!selectedEnd) {
-                    this.setInsideElevator(true);
+                    setInsideElevator(true);
                     setRandomNumberEndfloor();
-                    elevator.addToPbList(this.endFloorNumber);
-                    selectedEnd=true;
+                    elevator.addToPbList(desiredFloor);
+                    selectedEnd = true;
+                    System.out.println("---------------------------");
                     System.out.println("Door open "  + name + " steps in" );
+                    System.out.println(name + " wants to go to floor " + desiredFloor);
+                    System.out.println("---------------------------");
                 }
             }
 
-            if (isInsideElevator()  && !elevator.getDoorOpen()) {
-                System.out.println(name + " waiting for destination");
+            if (isInsideElevator()  && !elevator.getDoorOpen() && elevator.currentFloor != desiredFloor) {
+                //System.out.println(name + " waiting for destination");
             }
 
-            if (this.getEndFloorNumber() == elevator.getCurrentFloor() && elevator.getDoorOpen()) {
+            if (desiredFloor == elevator.getCurrentFloor() && elevator.getDoorOpen()) {
 
-                this.setInsideElevator(false);
+                setInsideElevator(false);
+                System.out.println("---------------------------");
                 System.out.println("Door open " + name + " steps out");
+                System.out.println("---------------------------");
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
 
                     e.printStackTrace();
                 }
-                setRandomNumberStartfloor();
-                elevator.addToPbList(this.startFloorNumber);
+                setStartingFloor(desiredFloor);
+                elevator.addToPbList(startingFloor);
                 selectedEnd = false;
             }
         }
@@ -88,28 +91,28 @@ public class Person implements Runnable {
         this.insideElevator = insideElevator;
     }
 
-    public int getEndFloorNumber() {
-        return endFloorNumber;
+    public int getDesiredFloor() {
+        return desiredFloor;
     }
 
-    public void setEndFloorNumber(int endFloorNumber) {
-        this.endFloorNumber = endFloorNumber;
+    public void setDesiredFloor(int desiredFloor) {
+        this.desiredFloor = desiredFloor;
     }
 
-    public  int getStartFloorNumber() {
-        return startFloorNumber;
+    public  int getStartingFloor() {
+        return startingFloor;
     }
 
-    public void setStartFloorNumber(int startFloorNumber) {
-        this.startFloorNumber = startFloorNumber;
+    public void setStartingFloor(int startingFloor) {
+        this.startingFloor = startingFloor;
     }
 
     public void  setRandomNumberStartfloor() {
-        this.setStartFloorNumber(getRandomNumber(1,7));
+        this.setStartingFloor(getRandomNumber(elevator.getBottomFloor(), elevator.getTopFloor()));
     }
 
     public void  setRandomNumberEndfloor() {
-        this.setEndFloorNumber(getRandomNumber(1,7));
+        this.setDesiredFloor(getRandomNumber(elevator.getBottomFloor(), elevator.getTopFloor()));
     }
 
 }

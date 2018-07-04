@@ -2,60 +2,64 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Elevator implements Runnable {
-    private static int topfloor = 8;
-    private static int bottonfloor = 1;
-    private Boolean door = false;
-    private static boolean goingup = true;
+    private int topFloor;
+    private int bottomFloor;
+    private boolean door = false;
+    private boolean goingUp = true;
     public int currentFloor = 1;
     public Set<Integer> pushButtonList = new HashSet<>();
 
-    public Elevator() {
+    public Elevator(Integer bottomFloor, int topFloor) {
         super();
+        this.topFloor = topFloor;
+        this.bottomFloor = bottomFloor;
     }
 
     public void moveUp() {
-        if (currentFloor < topfloor) {
+        if (currentFloor <= topFloor) {
             currentFloor++;
         }
     }
 
     public void moveDown() {
-        if (currentFloor > bottonfloor) {
+        if (currentFloor >= bottomFloor) {
             currentFloor--;
         }
     }
 
     public void move() throws InterruptedException {
         synchronized(pushButtonList) {
-            for (Integer value : pushButtonList) {
-                if (currentFloor == value.intValue()) {
+            for (Integer desiredFloors : pushButtonList) {
+                if (currentFloor == desiredFloors) {
                     this.setDoorOpen(true);
                     System.out.println("Elevator stopped at floor " + currentFloor);
 
-                    Thread.sleep(5000);
+                    Thread.sleep(4000);
                     this.setDoorOpen(false);
                     removeFromPbList((currentFloor));
                     break;
                 }
             }
-            if (goingup) {
-                for (Integer value : pushButtonList) {
-                    goingup =false;
-                    if (currentFloor < value.intValue()) {
-                        goingup = true;
+            if (goingUp) {
+                goingUp = false;
+                for (Integer desiredFloors : pushButtonList) {
+                    if (currentFloor < desiredFloors) {
+                        goingUp = true;
                     }
+
                 }
             }
-            if  (!goingup)  {
-                for (Integer value : pushButtonList) {
-                    goingup = true;
-                    if (currentFloor > value.intValue()) {
-                        goingup = false;
+            if  (!goingUp)  {
+                goingUp = true;
+                for (int desiredFloors : pushButtonList) {
+                    if (currentFloor > desiredFloors) {
+                        goingUp = false;
                     }
+
                 }
             }
         }
-        if (goingup) {
+        if (goingUp) {
             moveUp();
         } else {
             moveDown();
@@ -71,14 +75,14 @@ public class Elevator implements Runnable {
                 e.printStackTrace();
             }
             if (!pushButtonList.isEmpty()) {
-
+                System.out.println("Elevator is at floor " + this.currentFloor);
                 try {
                     move();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            System.out.println("Elevator is at floor " + this.currentFloor);
+
         }
     }
 
@@ -109,5 +113,21 @@ public class Elevator implements Runnable {
 
     public synchronized  void setDoorOpen(Boolean door) {
         this.door = door;
+    }
+
+    public synchronized int getTopFloor() {
+        return topFloor;
+    }
+
+    public synchronized void setTopFloor(int topFloor) {
+        this.topFloor = topFloor;
+    }
+
+    public synchronized int getBottomFloor() {
+        return bottomFloor;
+    }
+
+    public synchronized void setBottomFloor(int bottomFloor) {
+        this.bottomFloor = bottomFloor;
     }
 }
