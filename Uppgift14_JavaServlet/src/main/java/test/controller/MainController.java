@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import test.Book;
 
 import test.database.DataDAO;
 import test.database.IDataDAO;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -26,7 +26,7 @@ public class MainController {
 
     @Autowired
     private IDataDAO dataDao;
-
+/*
     @GetMapping("/books")
     public String books(Map<String, Object> model, String query1) {
 
@@ -35,30 +35,55 @@ public class MainController {
         model.put("books", bookList);
 
         return "books";
-    }
+    }*/
 
     @GetMapping("/index")
     public String index(Map<String, Object> model, String query1) {
         return "index";
     }
 
-    @RequestMapping("/addbooks")
-    public String addbooks(Map<String, Object> model, String query1) {
+    @GetMapping("/addbooks")
+    public  String addbooks(@ModelAttribute("Book")Book book) {
+
         return "addbooks";
     }
 
-    @GetMapping("/editbook")
-    public String editbook(Map<String, Object> model, String query1) {
+    @PostMapping("/addbooks")
+    public String addbook(@ModelAttribute("Book")Book book) {
+        dataDao.addbook(book);
+        return "redirect:/books";
+    }
+
+    @RequestMapping(value = "/editbook/{id}")
+    public String editBook(Map<String, Object> model, @ModelAttribute("book") Book b, @PathVariable int id) {
+        model.put("book", dataDao.getBookById(id));
         return "editbook";
     }
 
-    @GetMapping("/searchbook")
-    public String searchbook(Map<String, Object> model, String query1) {
-        return "searchbook";
+    @PostMapping(value = "/savebook")
+    public String saveBook(@ModelAttribute("Book")Book book){
+        dataDao.update(book);
+        return  "redirect:/books";
     }
 
-    @GetMapping("/deletebook")
-    public String deletebook(Map<String, Object> model, String query1) {
-        return "deletebook";
+    @GetMapping("/books")
+    public String books(Map<String, Object> model, @RequestParam(name="search", required=false) String search, String query1) {
+
+        System.out.println(search);
+
+        if (search == null) {
+            List<Book> b = dataDao.fetchBooks();
+            model.put("books", b);
+        } else {
+            List<Book> b = dataDao.fetchSelectedBooks(search);
+            model.put("books", b);
+        }
+        return "books";
+    }
+
+    @RequestMapping(value="/deletebook/{id}",method = RequestMethod.GET)
+    public String deleteBook(@PathVariable int id){
+        dataDao.delete(id);
+        return  "redirect:/books";
     }
 }

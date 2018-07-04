@@ -1,2 +1,5 @@
-test\Book.class
+test\controller\MainController.class
+test\database\DataDAO.class
+test\database\IDataDAO.class
 test\database\BookMapper.class
+test\Book.class

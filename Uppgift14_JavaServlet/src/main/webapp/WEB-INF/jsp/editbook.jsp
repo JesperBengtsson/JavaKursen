@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html lang="en">
@@ -17,8 +18,24 @@
 
 </head>
 <body>
-    <h1>editbook</h1>
-</body>  
- 
-
+    <div class="container">
+        <h2>Edit book</h2>
+        <form:form method="POST" action="/savebook" modelAttribute="book" class="form-group">
+            <table>
+                <form:hidden path="id" />
+                <tr>
+                    <td><form:label path="title">Title</form:label></td>
+                    <td><form:input path="title" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="description">Description</form:label></td>
+                    <td><form:input path="description" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Submit" class="btn btn-default"/></td>
+                </tr>
+            </table>
+        </form:form>
+    </div>
+</body>
 </html>
